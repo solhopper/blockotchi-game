@@ -1,0 +1,238 @@
+@import "@fontsource/press-start-2p";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Minecraft-style Tamagotchi Design System */
+
+@layer base {
+  :root {
+    /* Sky/Background */
+    --background: 200 70% 75%;
+    --foreground: 30 30% 15%;
+
+    /* Dirt brown for cards */
+    --card: 25 50% 35%;
+    --card-foreground: 45 80% 90%;
+
+    /* Stone gray for popover */
+    --popover: 0 0% 45%;
+    --popover-foreground: 0 0% 95%;
+
+    /* Grass green primary */
+    --primary: 100 45% 40%;
+    --primary-foreground: 100 60% 95%;
+
+    /* Wood/oak secondary */
+    --secondary: 30 40% 45%;
+    --secondary-foreground: 40 70% 95%;
+
+    /* Stone muted */
+    --muted: 0 0% 55%;
+    --muted-foreground: 0 0% 85%;
+
+    /* Gold accent */
+    --accent: 45 90% 50%;
+    --accent-foreground: 30 50% 15%;
+
+    /* Lava red destructive */
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 0 0% 98%;
+
+    /* Dark borders */
+    --border: 30 30% 20%;
+    --input: 30 30% 25%;
+    --ring: 100 45% 40%;
+
+    --radius: 0px;
+
+    /* Pet stats colors */
+    --hunger: 0 65% 50%;
+    --happiness: 45 85% 55%;
+    --energy: 200 70% 50%;
+
+    /* Minecraft UI colors */
+    --stone-light: 0 0% 60%;
+    --stone-dark: 0 0% 35%;
+    --dirt: 25 50% 30%;
+    --grass: 100 50% 35%;
+    --wood: 30 45% 40%;
+    --gold: 45 90% 50%;
+    --diamond: 185 70% 55%;
+    --night-sky: 230 50% 15%;
+
+    --sidebar-background: 25 50% 30%;
+    --sidebar-foreground: 45 80% 90%;
+    --sidebar-primary: 100 45% 40%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 45 90% 50%;
+    --sidebar-accent-foreground: 30 50% 15%;
+    --sidebar-border: 30 30% 20%;
+    --sidebar-ring: 100 45% 40%;
+  }
+
+  .dark {
+    --background: 230 50% 12%;
+    --foreground: 45 80% 90%;
+
+    --card: 25 45% 20%;
+    --card-foreground: 45 80% 90%;
+
+    --popover: 0 0% 25%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 100 50% 45%;
+    --primary-foreground: 100 60% 10%;
+
+    --secondary: 30 35% 30%;
+    --secondary-foreground: 40 70% 95%;
+
+    --muted: 0 0% 30%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 45 85% 55%;
+    --accent-foreground: 30 50% 10%;
+
+    --destructive: 0 65% 40%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 30 25% 25%;
+    --input: 30 25% 20%;
+    --ring: 100 50% 45%;
+
+    --sidebar-background: 25 45% 15%;
+    --sidebar-foreground: 45 80% 90%;
+    --sidebar-primary: 100 50% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 45 85% 55%;
+    --sidebar-accent-foreground: 30 50% 10%;
+    --sidebar-border: 30 25% 20%;
+    --sidebar-ring: 100 50% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-pixel;
+    image-rendering: pixelated;
+  }
+}
+
+@layer components {
+  /* Minecraft-style 3D button effect */
+  .minecraft-btn {
+    @apply relative font-pixel text-xs uppercase tracking-wider;
+    box-shadow: 
+      inset -2px -4px 0 0 hsl(var(--stone-dark)),
+      inset 2px 2px 0 0 hsl(var(--stone-light));
+  }
+
+  .minecraft-btn:hover {
+    box-shadow: 
+      inset -1px -2px 0 0 hsl(var(--stone-dark)),
+      inset 1px 1px 0 0 hsl(var(--stone-light));
+  }
+
+  .minecraft-btn:active {
+    box-shadow: 
+      inset 2px 2px 0 0 hsl(var(--stone-dark)),
+      inset -1px -1px 0 0 hsl(var(--stone-light));
+  }
+
+  /* Pixelated panel/card */
+  .pixel-panel {
+    @apply border-4 border-border;
+    box-shadow: 
+      4px 4px 0 0 hsl(var(--border)),
+      inset 2px 2px 0 0 hsl(var(--stone-light) / 0.3);
+  }
+
+  /* Stat bar container */
+  .stat-bar {
+    @apply h-6 border-2 border-border relative overflow-hidden;
+    box-shadow: inset 2px 2px 0 0 hsl(var(--border) / 0.5);
+  }
+
+  /* Pixel art bounce animation */
+  .pixel-bounce {
+    animation: pixelBounce 0.6s ease-in-out infinite;
+  }
+
+  /* Pet idle animation */
+  .pet-idle {
+    animation: petIdle 2s ease-in-out infinite;
+  }
+
+  /* Heart pulse for happiness */
+  .heart-pulse {
+    animation: heartPulse 1s ease-in-out infinite;
+  }
+
+  /* Evolution glow animation */
+  .evolve-glow {
+    animation: evolveGlow 0.5s ease-in-out infinite alternate;
+  }
+}
+
+@layer utilities {
+  .font-pixel {
+    font-family: "Press Start 2P", monospace;
+  }
+
+  .text-shadow-pixel {
+    text-shadow: 2px 2px 0 hsl(var(--border));
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes pixelBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes petIdle {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  25% {
+    transform: translateY(-4px) scale(1.02);
+  }
+  75% {
+    transform: translateY(2px) scale(0.98);
+  }
+}
+
+@keyframes heartPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes evolveGlow {
+  0% {
+    box-shadow: 0 0 10px 5px hsl(var(--gold) / 0.5);
+  }
+  100% {
+    box-shadow: 0 0 20px 10px hsl(var(--gold) / 0.8);
+  }
+}
