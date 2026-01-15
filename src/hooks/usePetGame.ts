@@ -69,6 +69,7 @@ const DEFAULT_STATE: PetState = {
   },
   lastCheckIn: Date.now(),
   isDead: false,
+  hasSeenWelcome: false,
 };
 
 export const usePetGame = () => {
@@ -363,6 +364,13 @@ export const usePetGame = () => {
     });
   }, [petState.hasMintedNFT, petState.nftMintAddress]);
 
+  const markWelcomeSeen = useCallback(() => {
+    setPetState(prev => ({
+      ...prev,
+      hasSeenWelcome: true,
+    }));
+  }, []);
+
   return {
     petState,
     setPetState,
@@ -381,5 +389,6 @@ export const usePetGame = () => {
     markCheckInComplete,
     revivePet,
     startNewGame,
+    markWelcomeSeen,
   };
 };

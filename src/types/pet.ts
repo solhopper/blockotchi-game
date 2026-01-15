@@ -87,6 +87,7 @@ export interface PetState {
   };
   lastCheckIn: number | null;
   isDead: boolean;
+  hasSeenWelcome: boolean;
 }
 
 export const ACHIEVEMENTS: Achievement[] = [

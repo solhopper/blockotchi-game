@@ -12,6 +12,7 @@ import AchievementToast from "@/components/AchievementToast";
 import { MintNFTModal } from "@/components/MintNFTModal";
 import DeathScreen from "@/components/DeathScreen";
 import DailyCheckIn from "@/components/DailyCheckIn";
+import WelcomeScreen from "@/components/WelcomeScreen";
 import { usePetGame } from "@/hooks/usePetGame";
 import { useSound } from "@/hooks/useSound";
 import { useAchievements } from "@/hooks/useAchievements";
@@ -22,10 +23,11 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 const Index = () => {
-  const { petState, setPetState, isActioning, justEvolved, feed, play, sleep, buySkin, selectSkin, addCoins, markNFTMinted, getGameCooldown, resetGameCooldown, getCheckInStatus, markCheckInComplete, revivePet, startNewGame } = usePetGame();
+  const { petState, setPetState, isActioning, justEvolved, feed, play, sleep, buySkin, selectSkin, addCoins, markNFTMinted, getGameCooldown, resetGameCooldown, getCheckInStatus, markCheckInComplete, revivePet, startNewGame, markWelcomeSeen } = usePetGame();
   const [showStore, setShowStore] = useState(false);
   const [showMiniGames, setShowMiniGames] = useState(false);
   const [showAchievements, setShowAchievements] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
   const { playSound } = useSound();
   const prevCoins = useRef(petState.coins);
   const { publicKey } = useWallet();
@@ -84,6 +86,16 @@ const Index = () => {
     setShowAchievements(true);
   };
 
+  const handleOpenHelp = () => {
+    playSound("click");
+    setShowWelcome(true);
+  };
+
+  const handleCloseWelcome = () => {
+    markWelcomeSeen();
+    setShowWelcome(false);
+  };
+
   const handleEarnCoins = (coins: number, gameType?: "clicker" | "catch") => {
     addCoins(coins, gameType);
   };
@@ -111,6 +123,11 @@ const Index = () => {
           onRevive={revivePet}
           onRestart={startNewGame}
         />
+      )}
+
+      {/* Welcome Screen */}
+      {showWelcome && (
+        <WelcomeScreen onClose={handleCloseWelcome} />
       )}
 
       {/* Achievement Toast */}
@@ -276,17 +293,12 @@ const Index = () => {
             >
               🎨 Skins
             </ActionButton>
-          </div>
-
-          {/* Temporary developer button for quickly adding coins */}
-          <div className="mt-2 flex justify-end">
-            <button
-              type="button"
-              onClick={() => addCoins(1000)}
-              className="text-[8px] text-foreground/60 hover:text-foreground underline"
+            <ActionButton
+              onClick={handleOpenHelp}
+              variant="secondary"
             >
-              DEV: +1000 coins
-            </button>
+              ❓ Help
+            </ActionButton>
           </div>
         </GamePanel>
 
