@@ -3,7 +3,7 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "blockotochi.game.twa",
+      "package_name": "app.pixelart.pixelartsolgallery",
       "sha256_cert_fingerprints": [
         "E1:E4:08:F2:2C:64:4A:97:3B:A8:62:F8:FC:EB:68:68:1C:E5:FB:DB:3E:E1:69:CB:74:6F:B9:5E:35:0B:0A:03"
       ]
