@@ -41,8 +41,19 @@ const DeathScreen = ({ onRevive, onRestart }: DeathScreenProps) => {
         })
       );
 
+      transaction.feePayer = publicKey;
+      const latestBlockhash = await connection.getLatestBlockhash("confirmed");
+      transaction.recentBlockhash = latestBlockhash.blockhash;
+
       const signature = await sendTransaction(transaction, connection);
-      await connection.confirmTransaction(signature, "confirmed");
+      await connection.confirmTransaction(
+        {
+          signature,
+          blockhash: latestBlockhash.blockhash,
+          lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
+        },
+        "confirmed"
+      );
 
       playSound("evolve");
       onRevive();
