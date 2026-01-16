@@ -4,7 +4,7 @@ import { Connection, PublicKey, Transaction } from "@solana/web3.js";
 export const APP_IDENTITY = {
   name: "Blockotchi",
   uri: "https://blockotchi-game.vercel.app",
-  icon: "https://blockotchi-game.vercel.app/icon-512.png",
+  icon: "/icon-512.png",
 };
 
 export function toUint8Array(base64: string): Uint8Array {
