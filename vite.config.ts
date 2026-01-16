@@ -60,7 +60,7 @@ export default defineConfig(({ mode }) => ({
         ],
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/api\.devnet\.solana\.com\/.*/i,
+            urlPattern: /^https:\/\/solana-rpc\.publicnode\.com\/.*/i,
             handler: "NetworkFirst",
             options: {
               cacheName: "solana-rpc-cache",
