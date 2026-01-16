@@ -7,6 +7,7 @@ import { useSound } from "@/hooks/useSound";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { sendTransactionWithBlockhash } from "@/utils/mobileWalletAdapter";
 
 interface MiniGamesProps {
   onEarnCoins: (coins: number, gameType?: "clicker" | "catch") => void;
@@ -83,8 +84,13 @@ const MiniGames = ({ onEarnCoins, onClose, getGameCooldown, resetGameCooldown }:
         })
       );
 
-      const signature = await sendTransaction(transaction, connection);
-      await connection.confirmTransaction(signature, "confirmed");
+      await sendTransactionWithBlockhash(
+        connection,
+        transaction,
+        sendTransaction,
+        publicKey,
+        "mainnet-beta"
+      );
 
       playSound("coin");
       resetGameCooldown(game);

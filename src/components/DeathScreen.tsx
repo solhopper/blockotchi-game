@@ -4,6 +4,7 @@ import ActionButton from "@/components/ActionButton";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, SystemProgram, Transaction, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { useSound } from "@/hooks/useSound";
+import { sendTransactionWithBlockhash } from "@/utils/mobileWalletAdapter";
 
 interface DeathScreenProps {
   onRevive: () => void;
@@ -41,8 +42,13 @@ const DeathScreen = ({ onRevive, onRestart }: DeathScreenProps) => {
         })
       );
 
-      const signature = await sendTransaction(transaction, connection);
-      await connection.confirmTransaction(signature, "confirmed");
+      await sendTransactionWithBlockhash(
+        connection,
+        transaction,
+        sendTransaction,
+        publicKey,
+        "mainnet-beta"
+      );
 
       playSound("evolve");
       onRevive();
