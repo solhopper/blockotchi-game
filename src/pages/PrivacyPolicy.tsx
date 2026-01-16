@@ -21,12 +21,6 @@ const PrivacyPolicy = () => {
             When you send a transaction, the details are recorded on the Solana blockchain and may be publicly visible.
           </p>
 
-          <h2 className="text-lg font-semibold">Third-Party Services</h2>
-          <p>
-            The App connects to Solana RPC providers to read blockchain data and submit transactions. Those providers
-            may receive your IP address and request metadata as part of normal network operations.
-          </p>
-
           <h2 className="text-lg font-semibold">Cookies / Local Storage</h2>
           <p>
             The App may use local storage to remember gameplay settings and session-related state on your device.

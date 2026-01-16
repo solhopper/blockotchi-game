@@ -14,10 +14,6 @@ const License = () => {
           <p>
             Third-party libraries and services used by the App are licensed under their respective licenses.
           </p>
-          <p>
-            If you need a specific open-source license text (MIT/Apache-2.0/GPL), tell me which one and I’ll swap this
-            page to the exact standard license.
-          </p>
         </div>
       </div>
     </div>
