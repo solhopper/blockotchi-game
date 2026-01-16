@@ -1,15 +1,71 @@
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 
 type SoundType = "feed" | "play" | "sleep" | "evolve" | "click" | "coin";
 
-export const useSound = () => {
-  const audioContextRef = useRef<AudioContext | null>(null);
+let sharedAudioContext: AudioContext | null = null;
+const scheduledTimeouts = new Set<number>();
+let listenersRegistered = false;
 
-  const getAudioContext = useCallback(() => {
-    if (!audioContextRef.current) {
-      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+function clearScheduledTimeouts() {
+  for (const id of scheduledTimeouts) {
+    clearTimeout(id);
+  }
+  scheduledTimeouts.clear();
+}
+
+async function suspendAudio() {
+  if (sharedAudioContext && sharedAudioContext.state === "running") {
+    await sharedAudioContext.suspend();
+  }
+}
+
+async function resumeAudio() {
+  if (sharedAudioContext && sharedAudioContext.state === "suspended") {
+    await sharedAudioContext.resume();
+  }
+}
+
+function ensureLifecycleListeners() {
+  if (listenersRegistered) return;
+  listenersRegistered = true;
+
+  const handleHidden = async () => {
+    clearScheduledTimeouts();
+    try {
+      await suspendAudio();
+    } catch {
+      // ignore
     }
-    return audioContextRef.current;
+  };
+
+  const handleVisible = async () => {
+    try {
+      await resumeAudio();
+    } catch {
+      // ignore
+    }
+  };
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      void handleHidden();
+    } else {
+      void handleVisible();
+    }
+  });
+
+  window.addEventListener("pagehide", () => {
+    void handleHidden();
+  });
+}
+
+export const useSound = () => {
+  const getAudioContext = useCallback(() => {
+    ensureLifecycleListeners();
+    if (!sharedAudioContext) {
+      sharedAudioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    }
+    return sharedAudioContext;
   }, []);
 
   const playTone = useCallback((
@@ -18,6 +74,7 @@ export const useSound = () => {
     type: OscillatorType = "square",
     volume: number = 0.3
   ) => {
+    if (document.hidden) return;
     const ctx = getAudioContext();
     const oscillator = ctx.createOscillator();
     const gainNode = ctx.createGain();
@@ -41,11 +98,17 @@ export const useSound = () => {
     volume: number = 0.3
   ) => {
     notes.forEach(({ freq, duration, delay }) => {
-      setTimeout(() => playTone(freq, duration, type, volume), delay * 1000);
+      if (document.hidden) return;
+      const id = window.setTimeout(() => {
+        scheduledTimeouts.delete(id);
+        playTone(freq, duration, type, volume);
+      }, delay * 1000);
+      scheduledTimeouts.add(id);
     });
   }, [playTone]);
 
   const playSound = useCallback((sound: SoundType) => {
+    if (document.hidden) return;
     switch (sound) {
       case "feed":
         // Munching sound - quick alternating notes
