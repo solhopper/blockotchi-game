@@ -1,0 +1,4 @@
+
+Permission is granted, at no cost, to anyone who obtains a copy of this software and its accompanying documentation (the “Software”) to use the Software without limitation. This includes the rights to use, copy, modify, combine, publish, distribute, sublicense, and/or sell copies of the Software, and to allow others to do the same, provided they receive the Software.
+
+The above copyright notice and this permission notice must be included in all copies or substantial portions of the Software.

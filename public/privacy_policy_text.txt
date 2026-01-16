@@ -1,0 +1,11 @@
+
+
+Blockotchi does not collect, store, or process personal information.
+
+The application does not use analytics tools, cookies, or tracking technologies, and no data is shared with third parties.
+
+Wallet connections and transactions are handled directly by your chosen wallet provider and remain local to your device. 
+
+We do not store, collect, or transmit wallet information beyond what is strictly necessary for on-chain interactions.
+
+We do not operate or enable any form of analytics within the app.
