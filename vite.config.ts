@@ -55,6 +55,9 @@ export default defineConfig(({ mode }) => ({
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2}"],
+        navigateFallbackDenylist: [
+              /^\/\.well-known\//,
+        ],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/api\.devnet\.solana\.com\/.*/i,
