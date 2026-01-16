@@ -60,8 +60,7 @@ const DailyCheckIn = ({ getCheckInStatus, onCheckInComplete }: DailyCheckInProps
         connection,
         transaction,
         sendTransaction,
-        publicKey,
-        "mainnet-beta"
+        publicKey
       );
 
       playSound("coin");

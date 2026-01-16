@@ -88,8 +88,7 @@ const MiniGames = ({ onEarnCoins, onClose, getGameCooldown, resetGameCooldown }:
         connection,
         transaction,
         sendTransaction,
-        publicKey,
-        "mainnet-beta"
+        publicKey
       );
 
       playSound("coin");

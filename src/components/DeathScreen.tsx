@@ -46,8 +46,7 @@ const DeathScreen = ({ onRevive, onRestart }: DeathScreenProps) => {
         connection,
         transaction,
         sendTransaction,
-        publicKey,
-        "mainnet-beta"
+        publicKey
       );
 
       playSound("evolve");
